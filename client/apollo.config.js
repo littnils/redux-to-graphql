@@ -1,10 +1,11 @@
 module.exports = {
   client: {
     service: {
-      name: 'redux-to-graphql',
-      // url: 'http://localhost:4000',
-      url: 'https://m3507x64l8.sse.codesandbox.io/',
-      includes: ['src/**/*.{ts,tsx,js,jsx}'],
+      name: 'graphql-product',
+      url: 'http://localhost:8080/graphql',
+      headers: { "Grass-Account-Type": "vendor",
+      "Grass-Account-Id": 15554 }
+      // url: 'https://m3507x64l8.sse.codesandbox.io/',
     },
   },
 };

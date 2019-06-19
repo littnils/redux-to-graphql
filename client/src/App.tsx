@@ -3,30 +3,13 @@ import { QueryResult } from '@apollo/react-common';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-import Picker from './components/Picker';
-import Posts from './components/Posts';
-
-import * as ApolloTypes from './__generated__/GetSubreddit';
-
-const clientSchema = gql`
-  extend type Subreddit {
-    lastUpdated: String!
-  }
-`;
-
 const resolvers = {
-  Subreddit: {
-    lastUpdated: () => new Date(Date.now()).toLocaleTimeString(),
-  },
 };
 
-const GET_SUBREDDIT = gql`
-  query GetSubreddit($name: String!) {
-    subreddit(name: $name) {
-      posts {
-        title
-      }
-      lastUpdated @client
+const GET_PRODUCT = gql`
+  query GetProduct($productId: Integer!) {
+    product(productId: productId) {
+      
     }
   }
 `;
@@ -41,9 +24,8 @@ const App: React.FC = () => {
     networkStatus,
     client,
   }: QueryResult<
-    ApolloTypes.GetSubreddit,
-    ApolloTypes.GetSubredditVariables
-  > = useQuery(GET_SUBREDDIT, {
+    ApolloTypes.GetProduct
+  > = useQuery(GET_PRODUCT, {
     variables: { name: selectedSubreddit },
     notifyOnNetworkStatusChange: true,
   });
@@ -57,21 +39,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Picker
-        value={selectedSubreddit}
-        onChange={setSelectedSubreddit}
-        options={['reactjs', 'frontend']}
-      />
-      <p>
-        <span>
-          {data &&
-            `Last updated at ${data.subreddit && data.subreddit.lastUpdated}.`}
-        </span>
-        {!loading && <button onClick={() => refetch()}>Refresh</button>}
-      </p>
-      <div style={{ opacity: refetching ? 0.5 : 1 }}>
-        <Posts posts={data && data.subreddit ? data.subreddit.posts : []} />
-      </div>
+
     </div>
   );
 };
